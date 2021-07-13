@@ -25,7 +25,7 @@ class ApiManager {
     func signIn(_ email: String , _ password: String , completion: @escaping(_ user: User? , _ error: String?)->()){
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] user, error in
             if let user = user {
-                self?.ref.child("user").child(user.user.uid).updateChildValues(["fcmToken" : Constant.fcmToken])
+                self?.ref.child("user").child(user.user.uid).updateChildValues(["fcmToken" : Constant.fcmToken , "isOnline" : false])
                 completion(user.user , nil)
             }
             if let error = error {
@@ -298,5 +298,9 @@ class ApiManager {
                }
            }
        }
+    func goOffline(){
+        let userID = DataManager().getUserData()?.userId ?? ""
+        ref.child("user").child(userID).updateChildValues(["isOnline" : false])
+    }
 }
 

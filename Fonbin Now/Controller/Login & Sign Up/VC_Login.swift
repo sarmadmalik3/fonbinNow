@@ -29,8 +29,8 @@ class VC_Login: UIViewController {
         DesignNavBar()
         DesignStatusBar()
         UserDefaults.standard.set("hello", forKey: "AppFirstOpened")
-//        txtEmail.text = "sarmadishfaq59@gmail.com"
-//        txtPassword.text = "123456"
+        txtEmail.text = "sarmadishfaq59@gmail.com"
+        txtPassword.text = "123456"
     }
     func DesignStatusBar(){
          let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)

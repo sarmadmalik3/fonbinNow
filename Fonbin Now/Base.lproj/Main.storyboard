@@ -935,7 +935,7 @@ e-mail account.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9CL-p4-SUG" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="724"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
@@ -956,14 +956,20 @@ e-mail account.</string>
                                 <color key="barTintColor" systemColor="labelColor"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6r-YW-24Z">
-                                <rect key="frame" x="235" y="190.5" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Fa-hz-BwF">
+                                <rect key="frame" x="381.5" y="176.5" width="5.5" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="O" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6r-YW-24Z">
+                                <rect key="frame" x="300" y="177" width="17.5" height="27.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hQZ-l1-iQQ">
-                                <rect key="frame" x="335" y="175" width="51" height="31"/>
+                                <rect key="frame" x="325" y="175" width="51" height="31"/>
                                 <color key="onTintColor" name="appRed"/>
                                 <connections>
                                     <action selector="goOnlineSwitchToggled:" destination="IvZ-J8-5PH" eventType="valueChanged" id="6M2-Oz-epJ"/>
@@ -973,16 +979,18 @@ e-mail account.</string>
                         <viewLayoutGuide key="safeArea" id="Tx3-ax-fw0"/>
                         <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="Tx3-ax-fw0" firstAttribute="bottom" secondItem="9CL-p4-SUG" secondAttribute="bottom" constant="50" id="3ZF-CW-sdl"/>
                             <constraint firstItem="hQZ-l1-iQQ" firstAttribute="top" secondItem="Ndl-P6-jg6" secondAttribute="bottom" constant="10" id="4Yg-fs-HQu"/>
                             <constraint firstItem="Tx3-ax-fw0" firstAttribute="trailing" secondItem="Ndl-P6-jg6" secondAttribute="trailing" constant="20" id="5Dv-eU-43w"/>
-                            <constraint firstItem="hQZ-l1-iQQ" firstAttribute="leading" secondItem="m6r-YW-24Z" secondAttribute="leading" constant="100" id="GNo-UD-Nul"/>
-                            <constraint firstAttribute="bottom" secondItem="9CL-p4-SUG" secondAttribute="bottom" id="I9R-Vu-Lwn"/>
+                            <constraint firstItem="6Fa-hz-BwF" firstAttribute="centerY" secondItem="hQZ-l1-iQQ" secondAttribute="centerY" id="DRD-Et-WRG"/>
+                            <constraint firstItem="hQZ-l1-iQQ" firstAttribute="leading" secondItem="m6r-YW-24Z" secondAttribute="leading" constant="25" id="GNo-UD-Nul"/>
                             <constraint firstItem="9CL-p4-SUG" firstAttribute="leading" secondItem="Tx3-ax-fw0" secondAttribute="leading" id="NZd-Ij-4yG"/>
                             <constraint firstItem="m6r-YW-24Z" firstAttribute="centerY" secondItem="hQZ-l1-iQQ" secondAttribute="centerY" id="ShO-8y-cwZ"/>
-                            <constraint firstItem="hQZ-l1-iQQ" firstAttribute="trailing" secondItem="Ndl-P6-jg6" secondAttribute="trailing" constant="-10" id="Ugf-xO-1Lf"/>
                             <constraint firstItem="9CL-p4-SUG" firstAttribute="trailing" secondItem="Tx3-ax-fw0" secondAttribute="trailing" id="dXm-6P-w0r"/>
                             <constraint firstItem="Ndl-P6-jg6" firstAttribute="top" secondItem="Tx3-ax-fw0" secondAttribute="top" constant="26" id="hoX-gS-tMz"/>
                             <constraint firstItem="Ndl-P6-jg6" firstAttribute="leading" secondItem="E9P-Jn-4fw" secondAttribute="leading" constant="20" id="jSb-1a-qae"/>
+                            <constraint firstItem="6Fa-hz-BwF" firstAttribute="leading" secondItem="hQZ-l1-iQQ" secondAttribute="trailing" constant="7.5" id="mKf-x3-8Pf"/>
+                            <constraint firstItem="Tx3-ax-fw0" firstAttribute="trailing" secondItem="6Fa-hz-BwF" secondAttribute="trailing" constant="27" id="qas-6H-hnL"/>
                             <constraint firstItem="9CL-p4-SUG" firstAttribute="top" secondItem="Tx3-ax-fw0" secondAttribute="top" id="sWO-sr-Qda"/>
                         </constraints>
                     </view>
@@ -996,7 +1004,7 @@ e-mail account.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j5f-TB-1WW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4800" y="2406.6964285714284"/>
+            <point key="canvasLocation" x="4798.5507246376819" y="2406.6964285714284"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xxB-Uv-tLl">

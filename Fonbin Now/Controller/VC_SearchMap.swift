@@ -35,6 +35,24 @@ class VC_SearchMap: UIViewController  , UITextFieldDelegate {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    let ilabel:UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.text = "I"
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    let Olabel:UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.text = "O"
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     let imageView:UIImageView = {
         let imageview = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
         imageview.translatesAutoresizingMaskIntoConstraints = false
@@ -76,6 +94,7 @@ class VC_SearchMap: UIViewController  , UITextFieldDelegate {
     lazy var adBannerView: GADBannerView = {
         let adBannerView = GADBannerView()
         adBannerView.alpha = 0
+        adBannerView.backgroundColor = .white
         adBannerView.delegate = self
         adBannerView.adUnitID = Constant.adMobsId
         adBannerView.rootViewController = self
@@ -188,6 +207,7 @@ class VC_SearchMap: UIViewController  , UITextFieldDelegate {
             adBannerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             adBannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             adBannerView.heightAnchor.constraint(equalToConstant: 50),
+            
         ])
     }
     
@@ -343,15 +363,25 @@ class VC_SearchMap: UIViewController  , UITextFieldDelegate {
                         return data.userId == localUser.userId
                     })
                     if let user = userOnlineStatus {
-                        if user.count == 0 {
-                            self?.lblGoOnline.text = "Go Online"
+                        if user.count > 0 {
+                            if user.first!.isOnline == false {
+                                self!.mapView.isMyLocationEnabled = true
+                                self!.mapView.settings.myLocationButton = true
+                                self?.onlineSwitch.isOn = false
+                                self?.showCurrentLocation = true
+                            }else{
+                                self!.mapView.isMyLocationEnabled = false
+                                self!.mapView.settings.myLocationButton = false
+                                self?.onlineSwitch.isOn = user.first!.isOnline
+                                self?.showCurrentLocation = false
+                            }
+                        }else{
+                            self!.mapView.isMyLocationEnabled = true
+                            self!.mapView.settings.myLocationButton = true
                             self?.onlineSwitch.isOn = false
                             self?.showCurrentLocation = true
-                        }else{
-                        self?.lblGoOnline.text = "Go Offline"
-                        self?.onlineSwitch.isOn = user.first!.isOnline
-                        self?.showCurrentLocation = false
                         }
+
                     }
                 }
                 
@@ -365,16 +395,21 @@ class VC_SearchMap: UIViewController  , UITextFieldDelegate {
     }
     func showStoresOnMap(_ storeData : [locationDataModel]){
             mapView.clear()
-//            var bounds = GMSCoordinateBounds()
+       let localUser = DataManager().getUserData()
             for data in storeData {
                 let marker = GMSMarker()
                 marker.position = CLLocationCoordinate2D(latitude: data.lat, longitude: data.long)
                 marker.userData = data
                 marker.map = mapView
-//                bounds = bounds.includingCoordinate(marker.position)
+                if data.userId == localUser?.userId ?? "" {
+                    marker.icon = UIImage(named: "currentLocation")
+                    marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
+                }else{
+                    marker.icon = UIImage(named: "placeholder")
+                    marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
+                }
+
             }
-//            let update = GMSCameraUpdate.fit(bounds, withPadding: 100)
-//            mapView.animate(with: update)
         
           locationManager.startUpdatingLocation()
         }
@@ -397,12 +432,12 @@ extension VC_SearchMap : CLLocationManagerDelegate , GMSMapViewDelegate , UIGest
         guard let location = locations.first else { return }
         mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
         currentLocation = location.coordinate
-        if showCurrentLocation {
-            let marker = GMSMarker(position: location.coordinate)
-            marker.icon = UIImage(named: "currentLocation")
-            marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
-            marker.map = mapView
-        }
+//        if showCurrentLocation {
+//            let marker = GMSMarker(position: location.coordinate)
+//            marker.icon = UIImage(named: "currentLocation")
+//            marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
+//            marker.map = mapView
+//        }
         locationManager.stopUpdatingLocation()
     }
 
