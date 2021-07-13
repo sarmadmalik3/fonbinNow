@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "Factory-Machine-PNG-Transparent-Image.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "Factory-Machine-PNG-Transparent-Image@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "Factory-Machine-PNG-Transparent-Image@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
