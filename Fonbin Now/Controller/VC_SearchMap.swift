@@ -355,7 +355,11 @@ class VC_SearchMap: UIViewController  , UITextFieldDelegate {
                     }
                 }
                 
-                self?.showStoresOnMap(self?.storeData ?? [])
+                let onlineStores = self?.storeData.filter({ data in
+                    return data.isOnline == true
+                })
+                
+                self?.showStoresOnMap(onlineStores ?? [])
             }
         }
     }

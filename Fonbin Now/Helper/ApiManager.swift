@@ -83,7 +83,7 @@ class ApiManager {
     }
     
     func getStores(completion: @escaping(_ store: [locationDataModel]?) -> ()){
-        ref.child("user").queryOrdered(byChild: "isOnline").queryEqual(toValue: true).observe(.value) { snapshot in
+        ref.child("user").observe(.value) { snapshot in
             
             var store = [locationDataModel]()
             for child in snapshot.children {
@@ -140,7 +140,7 @@ class ApiManager {
             if let error = error {
                 completion(nil , error.localizedDescription)
             }else{
-                self?.ref.child("user").child(userUUID).child("deviceFcms").child(uuid).setValue(["id" : uuid])
+                self?.ref.child("user").child(userUUID).child("followingStores").child(uuid).setValue(["id" : uuid])
                 completion("Store has been added to favourite list" , nil)
             }
         }
@@ -152,7 +152,7 @@ class ApiManager {
             if let error = error {
                 completion(nil, error.localizedDescription)
             }else{
-                self?.ref.child("user").child(userUUID).child("deviceFcms").child(uuid).removeValue()
+                self?.ref.child("user").child(userUUID).child("followingStores").child(uuid).removeValue()
                 completion("Store has been removed from your favourite list" , nil)
             }
         }
@@ -176,7 +176,7 @@ class ApiManager {
     
     func getFCMDeviceUsers(completion: @escaping(_ usersList: [String]?) -> ()){
         let uuid = DataManager().getUserData()?.userId ?? ""
-        ref.child("user").child(uuid).child("deviceFcms").observeSingleEvent(of: .value) { snapshot in
+        ref.child("user").child(uuid).child("followingStores").observeSingleEvent(of: .value) { snapshot in
             var deviceTokens = [String]()
             for child in snapshot.children {
                 let snap = child as! DataSnapshot
