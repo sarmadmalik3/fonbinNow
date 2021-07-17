@@ -395,19 +395,21 @@ class VC_SearchMap: UIViewController  , UITextFieldDelegate {
     }
     func showStoresOnMap(_ storeData : [locationDataModel]){
             mapView.clear()
-       let localUser = DataManager().getUserData()
+//       let localUser = DataManager().getUserData()
             for data in storeData {
                 let marker = GMSMarker()
                 marker.position = CLLocationCoordinate2D(latitude: data.lat, longitude: data.long)
                 marker.userData = data
                 marker.map = mapView
-                if data.userId == localUser?.userId ?? "" {
-                    marker.icon = UIImage(named: "currentLocation")
-                    marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
-                }else{
-                    marker.icon = UIImage(named: "placeholder")
-                    marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
-                }
+                marker.icon = UIImage(named: "currentLocation")
+                marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
+//                if data.userId == localUser?.userId ?? "" {
+//                    marker.icon = UIImage(named: "currentLocation")
+//                    marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
+//                }else{
+//                    marker.icon = UIImage(named: "placeholder")
+//                    marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
+//                }
 
             }
         
@@ -432,12 +434,6 @@ extension VC_SearchMap : CLLocationManagerDelegate , GMSMapViewDelegate , UIGest
         guard let location = locations.first else { return }
         mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
         currentLocation = location.coordinate
-//        if showCurrentLocation {
-//            let marker = GMSMarker(position: location.coordinate)
-//            marker.icon = UIImage(named: "currentLocation")
-//            marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
-//            marker.map = mapView
-//        }
         locationManager.stopUpdatingLocation()
     }
 

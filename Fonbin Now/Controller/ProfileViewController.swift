@@ -69,7 +69,11 @@ class ProfileViewController: UIViewController {
                     self?.hideLoadingView()
                     if let message = message {
                         self?.showAlertWithSingleButton("Success", message, completion: {
-                            self?.navigationController?.popViewController(animated: true)
+                            self?.showLoadingView()
+                            ApiManager.shared.getUserProfile { [weak self] in
+                                self?.hideLoadingView()
+                                self?.navigationController?.popViewController(animated: true)
+                            }
                         })
                     }
                 }

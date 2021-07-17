@@ -141,7 +141,7 @@ class ApiManager {
                 completion(nil , error.localizedDescription)
             }else{
                 self?.ref.child("user").child(userUUID).child("followingStores").child(uuid).setValue(["id" : uuid])
-                completion("Store has been added to favourite list" , nil)
+                completion("Store has been added to following list" , nil)
             }
         }
     }
@@ -153,7 +153,7 @@ class ApiManager {
                 completion(nil, error.localizedDescription)
             }else{
                 self?.ref.child("user").child(userUUID).child("followingStores").child(uuid).removeValue()
-                completion("Store has been removed from your favourite list" , nil)
+                completion("Store has been removed from your following list" , nil)
             }
         }
     }
