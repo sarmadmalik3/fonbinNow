@@ -9,6 +9,7 @@
 import UIKit
 import GoogleMaps
 import GoogleMobileAds
+import FirebaseAuth
 import DropDown
 
 class VC_SearchMap: UIViewController  , UITextFieldDelegate {
@@ -293,29 +294,53 @@ class VC_SearchMap: UIViewController  , UITextFieldDelegate {
     }
     
     @objc func openProfile(){
-        openVC("ProfileViewController")
+        
+        if let _ = DataManager().getUserData() {
+            openVC("ProfileViewController")
+        } else {
+            showAlertWithDobuleButton("Attention", "You can't use this feature without login , do you want to log in?") { [weak self] in
+                self?.openVC("VC_Login")
+            }
+        }
+//        guard Auth.auth().currentUser != nil else {
+//            showAlertWithDobuleButton("Attention", "You can't use this feature without login , do you want to log in?") { [weak self] in
+//                self?.openVC("VC_Login")
+//            }
+//            return
+//        }
+//        openVC("ProfileViewController")
     }
     @objc func favButtonPressed(_ sender: UIButton){
         
-        if sender.isSelected == true {
-            ApiManager.shared.removeFromFavList(storeUUID) { [weak self] message, error in
-                if let message = message {
-                    self?.showAlertView(message: message, title: "Alert")
+        if let _ = DataManager().getUserData() {
+            
+            if sender.isSelected == true {
+                ApiManager.shared.removeFromFavList(storeUUID) { [weak self] message, error in
+                    if let message = message {
+                        self?.showAlertView(message: message, title: "Alert")
+                    }
+                    if let error = error {
+                        self?.showAlertView(message: error, title: "Alert")
+                    }
                 }
-                if let error = error {
-                    self?.showAlertView(message: error, title: "Alert")
+            }else{
+                ApiManager.shared.addToFavList(storeUUID) { [weak self] message, error in
+                    if let message = message {
+                        self?.showAlertView(message: message, title: "Alert")
+                    }
+                    if let error = error {
+                        self?.showAlertView(message: error, title: "Alert")
+                    }
                 }
             }
-        }else{
-            ApiManager.shared.addToFavList(storeUUID) { [weak self] message, error in
-                if let message = message {
-                    self?.showAlertView(message: message, title: "Alert")
-                }
-                if let error = error {
-                    self?.showAlertView(message: error, title: "Alert")
-                }
+        }else {
+            showAlertWithDobuleButton("Attention", "You can't use this feature without login , do you want to log in?") { [weak self] in
+                self?.openVC("VC_Login")
             }
+            return
         }
+        
+
         
         sender.isSelected = !sender.isSelected
 
@@ -323,7 +348,20 @@ class VC_SearchMap: UIViewController  , UITextFieldDelegate {
     }
     
     @IBAction func goOnlineSwitchToggled(_ sender: UISwitch) {
-        guard let user = DataManager().getUserData() else { return }
+//        guard Auth.auth().currentUser != nil else {
+//            sender.isOn = false
+//            showAlertWithDobuleButton("Attention", "You can't use this feature without login , do you want to log in?") { [weak self] in
+//                self?.openVC("VC_Login")
+//            }
+//            return
+//        }
+        guard let user = DataManager().getUserData() else {
+            sender.isOn = false
+            showAlertWithDobuleButton("Attention", "You can't use this feature without login , do you want to log in?") { [weak self] in
+                self?.openVC("VC_Login")
+            }
+            return
+        }
         showLoadingView()
         ApiManager.shared.goOnline(userId: user.userId, lat: currentLocation.latitude, long: currentLocation.longitude, isOnline: sender.isOn) { [weak self] message, error in
             self?.hideLoadingView()
@@ -383,6 +421,11 @@ class VC_SearchMap: UIViewController  , UITextFieldDelegate {
                         }
 
                     }
+                }else{
+                    self!.mapView.isMyLocationEnabled = true
+                    self!.mapView.settings.myLocationButton = true
+                    self?.onlineSwitch.isOn = false
+                    self?.showCurrentLocation = true
                 }
                 
                 let onlineStores = self?.storeData.filter({ data in
@@ -395,7 +438,7 @@ class VC_SearchMap: UIViewController  , UITextFieldDelegate {
     }
     func showStoresOnMap(_ storeData : [locationDataModel]){
             mapView.clear()
-//       let localUser = DataManager().getUserData()
+
             for data in storeData {
                 let marker = GMSMarker()
                 marker.position = CLLocationCoordinate2D(latitude: data.lat, longitude: data.long)
@@ -403,14 +446,6 @@ class VC_SearchMap: UIViewController  , UITextFieldDelegate {
                 marker.map = mapView
                 marker.icon = UIImage(named: "currentLocation")
                 marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
-//                if data.userId == localUser?.userId ?? "" {
-//                    marker.icon = UIImage(named: "currentLocation")
-//                    marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
-//                }else{
-//                    marker.icon = UIImage(named: "placeholder")
-//                    marker.setIconSize(scaledToSize: .init(width: 40, height: 40))
-//                }
-
             }
         
           locationManager.startUpdatingLocation()
@@ -475,6 +510,17 @@ extension VC_SearchMap : CLLocationManagerDelegate , GMSMapViewDelegate , UIGest
             self?.navigationLatlong = CLLocationCoordinate2D(latitude: data.lat, longitude: data.long)
             self?.storeUUID = data.userId
         }
+        if data.isOnline == false {
+           NavigateButton.isUserInteractionEnabled = false
+           NavigateButton.alpha = 0.5
+        }else {
+           NavigateButton.isUserInteractionEnabled = true
+           NavigateButton.alpha = 1.0
+        }
+        
+        
+        guard Auth.auth().currentUser != nil else { return }
+        
         ApiManager.shared.checkIfUserExistInFavList(storeUUID) { [weak self] exist in
             if exist {
                 self?.favButton.isSelected = true
@@ -504,6 +550,23 @@ extension VC_SearchMap : CLLocationManagerDelegate , GMSMapViewDelegate , UIGest
             self?.subtitleLabel.text = data.bio
             self?.navigationLatlong = CLLocationCoordinate2D(latitude: data.lat, longitude: data.long)
             self?.storeUUID = data.userId
+            if data.isOnline == false {
+                self?.NavigateButton.isUserInteractionEnabled = false
+                self?.NavigateButton.alpha = 0.5
+            }else {
+                self?.NavigateButton.isUserInteractionEnabled = true
+                self?.NavigateButton.alpha = 1.0
+            }
+            
+            guard Auth.auth().currentUser != nil else { return }
+            
+            ApiManager.shared.checkIfUserExistInFavList(self!.storeUUID) { [weak self] exist in
+                if exist {
+                    self?.favButton.isSelected = true
+                }else{
+                    self?.favButton.isSelected = false
+                }
+            }
         }
     }
     @objc func hideBlurView(){

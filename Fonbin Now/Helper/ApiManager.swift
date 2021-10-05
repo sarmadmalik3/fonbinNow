@@ -25,7 +25,7 @@ class ApiManager {
     func signIn(_ email: String , _ password: String , completion: @escaping(_ user: User? , _ error: String?)->()){
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] user, error in
             if let user = user {
-                self?.ref.child("user").child(user.user.uid).updateChildValues(["fcmToken" : Constant.fcmToken , "isOnline" : false])
+                self?.ref.child("user").child(user.user.uid).updateChildValues(["fcmToken" : Constant.fcmToken , "online" : false , "id" : user.user.uid])
                 completion(user.user , nil)
             }
             if let error = error {
@@ -53,8 +53,8 @@ class ApiManager {
     }
     
     
-    func getUserProfile(completion: @escaping() -> ()){
-        let uuid = Auth.auth().currentUser!.uid
+    func getUserProfile(uuid: String,completion: @escaping() -> ()){
+//        let uuid = DataManager().getUserData()?.userId ?? ""
         
         ref.child("user").child(uuid).observeSingleEvent(of: .value, with: { snapshot in
             var object = localUser()
@@ -112,7 +112,7 @@ class ApiManager {
                     if let mobile = value["mobileNo"] as? String {
                         storeObject.mobileNum = mobile
                     }
-                    if let isOnline = value["isOnline"] as? Bool {
+                    if let isOnline = value["online"] as? Bool {
                         storeObject.isOnline = isOnline
                     }
                     
@@ -159,7 +159,7 @@ class ApiManager {
     }
     
     func goOnline(userId: String , lat: Double , long: Double, isOnline: Bool ,completion: @escaping(_ message: String? , _ error: String?) -> ()){
-        ref.child("user").child(userId).updateChildValues(["lat" : lat , "lng" : long , "isOnline" : isOnline]) { error, snapshot in
+        ref.child("user").child(userId).updateChildValues(["lat" : lat , "lng" : long , "online" : isOnline]) { error, snapshot in
             if let error = error {
                 completion(nil , error.localizedDescription)
              return
@@ -257,7 +257,7 @@ class ApiManager {
                     if let mobile = value["mobileNo"] as? String {
                         storeObject.mobileNum = mobile
                     }
-                    if let isOnline = value["isOnline"] as? Bool {
+                    if let isOnline = value["online"] as? Bool {
                         storeObject.isOnline = isOnline
                     }
                     
@@ -270,7 +270,7 @@ class ApiManager {
     }
     
     func updateProfile(_ imageUrl: String ,_ bio: String , _ name: String, completion: @escaping(_ message: String? , _ error: String?) -> ()){
-        let uuid = Auth.auth().currentUser!.uid
+        let uuid = DataManager().getUserData()?.userId ?? ""
         ref.child("user").child(uuid).updateChildValues(["imageUrl" : imageUrl , "bio" : bio , "name" : name]) { error, response in
             if let error = error {
                 completion(nil , error.localizedDescription)
@@ -300,7 +300,7 @@ class ApiManager {
        }
     func goOffline(){
         let userID = DataManager().getUserData()?.userId ?? ""
-        ref.child("user").child(userID).updateChildValues(["isOnline" : false])
+        ref.child("user").child(userID).updateChildValues(["online" : false])
     }
 }
 

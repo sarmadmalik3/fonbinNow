@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 
 class Menu_VC: UIViewController , UITableViewDelegate , UITableViewDataSource{
     
@@ -28,12 +28,18 @@ class Menu_VC: UIViewController , UITableViewDelegate , UITableViewDataSource{
         menuTableView.dataSource = self
         
         menuTableView.tableFooterView = UIView()
-        if let user = DataManager().getUserData() {
-            lblName.text = user.name
-        }
+        
     }
     //MARK:- View Will Appear
     override func viewWillAppear(_ animated: Bool) {
+        lblName.text = ""
+        if let user = DataManager().getUserData() {
+            lblName.text = user.name
+            titles = ["Terms and Conditions" , "Support" ,"Contact Us" , "Log out"]
+        }else {
+            titles = ["Terms and Conditions" , "Support" ,"Contact Us" , "Log in"]
+        }
+
         menuTableView.reloadData()
     }
     
@@ -54,9 +60,17 @@ class Menu_VC: UIViewController , UITableViewDelegate , UITableViewDataSource{
         
         if indexPath.row == 3 {
             
-            showAlertWithDobuleButton("Alert", "Are you sure you want to logout?") { [weak self] in
-                DataManager().removeUserData()
-                self?.openVC("VC_Login")
+            if let _ = DataManager().getUserData() {
+                showAlertWithDobuleButton("Alert", "Are you sure you want to logout?") { [weak self] in
+                    ApiManager.shared.goOffline()
+                    DataManager().removeUserData()
+                    do { try Auth.auth().signOut() }
+                    catch { print("already logged out") }
+                    self?.navigationController?.popToRootViewController(animated: true)
+                }
+                
+            }else{
+                openVC("VC_Login")
             }
             
         }
@@ -84,6 +98,7 @@ class Menu_VC: UIViewController , UITableViewDelegate , UITableViewDataSource{
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "Menu_TableViewCell", for: indexPath) as! Menu_TableViewCell
                 cell.lblStone.text  = titles[indexPath.row]
+            
             cell.imgLogo.image = UIImage(named: imageName[indexPath.row])?.withTintColor(.white)
             return cell
             
@@ -91,7 +106,7 @@ class Menu_VC: UIViewController , UITableViewDelegate , UITableViewDataSource{
           
             let cell = tableView.dequeueReusableCell(withIdentifier: "AboutUsTableViewCell", for: indexPath) as! AboutUsTableViewCell
             cell.lblname.text = arrayAbout[indexPath.row].Tittle
-            //cell.imgLogo.image = UIImage(named: arrayAbout[indexPath.row].Image)
+
                 
      
            return cell

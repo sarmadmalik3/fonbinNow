@@ -3,4 +3,70 @@
    uuid = "C18F3F9F-3ABE-494E-AA83-BEC8F6E73DF8"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D982DD8D-2B16-432A-980A-3D692CEDC34B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Fonbin Now/Helper/ApiManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "signIn(_:_:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C2A9F2BC-3538-4F6B-B4FD-372D374FBE08"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Fonbin Now/Helper/ApiManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "getUserProfile(uuid:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C2A9F2BC-3538-4F6B-B4FD-372D374FBE08 - 2ebd0abfc941d1e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Fonbin_Now.ApiManager.getUserProfile(uuid: Swift.String, completion: () -&gt; ()) -&gt; ()"
+                  moduleName = "Fonbin Now"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mac/Documents/My%20Work/Fonbin%20Now/Fonbin%20Now/Helper/ApiManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "59"
+                  endingLineNumber = "59"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "C2A9F2BC-3538-4F6B-B4FD-372D374FBE08 - 38606b7ef5a78688"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.FIRDataSnapshot) -&gt; () in Fonbin_Now.ApiManager.getUserProfile(uuid: Swift.String, completion: () -&gt; ()) -&gt; ()"
+                  moduleName = "Fonbin Now"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mac/Documents/My%20Work/Fonbin%20Now/Fonbin%20Now/Helper/ApiManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "60"
+                  endingLineNumber = "60"
+                  offsetFromSymbolStart = "240">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

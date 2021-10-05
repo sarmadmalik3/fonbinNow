@@ -37,11 +37,15 @@ class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
         alert.addAction(cancelAction)
     }
 
-    func pickImage(_ viewController: UIViewController, _ callback: @escaping ((UIImage) -> ())) {
+    func pickImage(_ viewController: UIViewController,_ sourceView : UIButton , _ callback: @escaping ((UIImage) -> ())) {
         pickImageCallback = callback;
         self.viewController = viewController;
 
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            alert.popoverPresentationController?.sourceView = sourceView
+        }else {
         alert.popoverPresentationController?.sourceView = self.viewController!.view
+        }
 
         viewController.present(alert, animated: true, completion: nil)
     }

@@ -33,7 +33,7 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func addButtonPressed(_ sender: Any) {
-        ImagePickerManager().pickImage(self) { [weak self] image in
+        ImagePickerManager().pickImage(self, btnAdd) { [weak self] image in
             self?.imgProfile.image = image
         }
     }
@@ -70,7 +70,8 @@ class ProfileViewController: UIViewController {
                     if let message = message {
                         self?.showAlertWithSingleButton("Success", message, completion: {
                             self?.showLoadingView()
-                            ApiManager.shared.getUserProfile { [weak self] in
+                            let uuid = DataManager().getUserData()?.userId ?? ""
+                            ApiManager.shared.getUserProfile(uuid: uuid) { [weak self] in
                                 self?.hideLoadingView()
                                 self?.navigationController?.popViewController(animated: true)
                             }

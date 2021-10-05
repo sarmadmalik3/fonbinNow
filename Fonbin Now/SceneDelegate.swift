@@ -16,17 +16,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            
-            if let user = DataManager().getUserData() {
-                if user.isLoggedIn {
+
+
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let initialViewController = storyboard.instantiateViewController(withIdentifier: "dashboardNav")
 
                     window.rootViewController =  initialViewController
                     self.window = window
                     window.makeKeyAndVisible()
-                }
-            }
+                
+            
         }
 
         guard let _ = (scene as? UIWindowScene) else { return }

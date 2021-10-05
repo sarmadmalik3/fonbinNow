@@ -47,6 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
+        
+        guard let _ = DataManager().getUserData() else {
+            return
+        }
         ApiManager.shared.goOffline()
     }
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
@@ -63,6 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         UNUserNotificationCenter.current().requestAuthorization(
           options: authOptions) { _, _ in }
         // 3
+        
         DispatchQueue.main.async {
             application.registerForRemoteNotifications()
         }

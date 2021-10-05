@@ -21,7 +21,7 @@
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<string>ca-app-pub-7417148340761062~6918526018</string>
 	<key>GADIsAdManagerApp</key>
 	<true/>
 	<key>LSApplicationQueriesSchemes</key>
@@ -35,12 +35,16 @@
 	<string>pk.eyJ1IjoiZm9uYmluIiwiYSI6ImNrcHdzd2hpcTB6bzUyb256bXk1NWliODcifQ.Q-0zBoWO9_BqEoQQCdW2fA</string>
 	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Your photo will be used for your business profile picture.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>App Need Location</string>
+	<string>Your location will be used to find you on the map.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>App Need Location</string>
+	<string>Your location will be used to find you on the map.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>App Need Location</string>
+	<string>Your location will be used to find you on the map.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App needs access to gallery to use your photo for business profile.</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

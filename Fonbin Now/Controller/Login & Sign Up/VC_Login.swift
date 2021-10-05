@@ -76,10 +76,10 @@ class VC_Login: UIViewController {
                     }
                 }else{
 
-                    ApiManager.shared.getUserProfile {
+                    ApiManager.shared.getUserProfile(uuid: user.uid, completion: {
                         self?.hideLoadingView()
                         self!.openVC("Dashboard")
-                    }
+                    })
                 }
             }
             if let _ = error {
